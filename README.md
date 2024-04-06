@@ -37,7 +37,7 @@ To be able to demonstrate the functionality of this block within the context of 
 - Use of any free public API's is allowed to achieve the requirements
 - Vue components should be created using the options API. See the  text or form components for examples
 
-- The address input elemetns should use boostrap vue
+- The address input elements should use boostrap vue
 - All styling should use boostrap classes
 
 ### Acceptance Criteria
@@ -62,7 +62,7 @@ To be able to demonstrate the functionality of this block within the context of 
       - If the block is valid, `createClaim` is called, and the created claim response is stored in state
       - If the block is invalid, the form is not submitted and an error message is displayed
     - Users IP address is stored on the claim
-    - The form navigates to the /complete route
+    - The form shows a message that the information has been submitted successfully
 
 ## Tasks
 
