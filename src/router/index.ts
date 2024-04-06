@@ -1,20 +1,23 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
-import HomeView from "../views/HomeView.vue";
-
+import FormView from "@/views/FormView.vue";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
   {
     path: "/:userId",
-    name: "home",
-    component: HomeView,
+    name: "form",
+    component: FormView,
     beforeEnter: (to, from, next) => {
       // TODO load the user data from getUserDataById and store it with VueX
-      next(); 
+      next();
     },
   },
-  // TODO add the route /complete using the component CompleteView
+  {
+    path: "/",
+    name: "form",
+    component: FormView,
+  },
 ];
 
 const router = new VueRouter({

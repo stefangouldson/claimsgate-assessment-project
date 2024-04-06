@@ -1,17 +1,16 @@
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
 export default Vue.extend({
-  name: 'Form',
-})
+  name: "FormComponent",
+});
 </script>
 <template>
   <!-- TODO Use bootstrap classes to ensure the form reders appropriately on mobile, and each element has appropriate vertical spacing -->
-  <form>
+  <div>
     <slot name="title"></slot>
     <slot name="subtitle"></slot>
     <slot name="question"></slot>
 
     <slot name="submit"></slot>
-  </form>
+  </div>
 </template>
-
