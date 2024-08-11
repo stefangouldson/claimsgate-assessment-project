@@ -5,6 +5,7 @@ import TextComponent from "@/components/text.vue";
 import InputComponent from "@/components/input.vue";
 import SubmitComponent from "@/components/submit.vue";
 import AddressListComponent from "@/components/addressList.vue";
+import ClaimComponent from "@/components/claim.vue";
 import { mapGetters } from "vuex";
 import { Address } from "@/types";
 const emptyAddress: Address = {
@@ -21,6 +22,7 @@ export default Vue.extend({
     TextComponent,
     InputComponent,
     SubmitComponent,
+    ClaimComponent,
   },
   data() {
     return {
@@ -49,13 +51,15 @@ export default Vue.extend({
   computed: {
     ...mapGetters({
       userName: "firstName",
-      hasThree: "has3Addresses",
+      // hasThree: "has3Addresses",
+      claim: "claimData",
+      has3Years: "has3Years",
     }),
   },
   methods: {
     addAddress() {
-      this.$store.commit("add_address", this.form);
-      console.log(this.$store.state.addresses);
+      this.$store.commit("add_address", { ...this.form });
+      this.form = { ...emptyAddress };
     },
     handleSubmit() {
       console.log("submitted");
@@ -66,7 +70,7 @@ export default Vue.extend({
 
 <template>
   <div>
-    <FormComponent @submitted="handleSubmit">
+    <FormComponent @submitted="handleSubmit" v-if="!claim">
       <template #title>
         <TextComponent type="h1" :text="`Welcome Back ${userName}`" />
       </template>
@@ -79,7 +83,7 @@ export default Vue.extend({
       <template #list>
         <AddressListComponent />
       </template>
-      <template #question v-if="hasThree">
+      <template #question v-if="!has3Years">
         <form @submit.prevent="addAddress">
           <InputComponent
             v-for="(field, index) in fields"
@@ -96,8 +100,9 @@ export default Vue.extend({
         </form>
       </template>
       <template #submit>
-        <SubmitComponent />
+        <SubmitComponent v-if="has3Years" />
       </template>
     </FormComponent>
+    <ClaimComponent v-else :claim="claim" />
   </div>
 </template>

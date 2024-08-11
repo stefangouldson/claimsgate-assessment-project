@@ -1,5 +1,6 @@
 <script lang="ts">
 import Vue from "vue";
+import { mapGetters } from "vuex";
 
 export default Vue.extend({
   name: "SubmitComponent",
@@ -8,10 +9,21 @@ export default Vue.extend({
       this.$store.dispatch("createClaim");
     },
   },
+  computed: {
+    ...mapGetters({
+      hasAddress: "hasAddress",
+    }),
+  },
 });
 </script>
+
 <template>
-  <b-button @click.prevent="handleSubmit" variant="primary" class="my-5">
+  <b-button
+    v-if="hasAddress"
+    @click.prevent="handleSubmit"
+    variant="primary"
+    class="my-5"
+  >
     Submit Claim
   </b-button>
 </template>
