@@ -2,13 +2,18 @@
 import Vue from "vue";
 export default Vue.extend({
   name: "FormComponent",
+  methods: {
+    handleSubmit() {
+      this.$emit("submitted");
+    },
+  },
 });
 </script>
 <template>
-  <!-- TODO Use bootstrap classes to ensure the form reders appropriately on mobile, and each element has appropriate vertical spacing -->
   <div>
     <slot name="title"></slot>
     <slot name="subtitle"></slot>
+    <slot name="list"></slot>
     <slot name="question"></slot>
 
     <slot name="submit"></slot>

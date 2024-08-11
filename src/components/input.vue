@@ -17,8 +17,12 @@ export default Vue.extend({
     BListGroupItem,
   },
   props: {
+    name: {
+      type: String,
+      required: true,
+    },
     type: {
-      default: 'text'
+      default: "text",
     },
     label: {
       type: String,
@@ -34,32 +38,34 @@ export default Vue.extend({
     },
     placeholder: {
       type: String,
-      default: ""
-    }
+      default: "",
+    },
   },
-  data(){
+  data() {
     return {
-      inputValue: this.value
-    }
+      inputValue: this.value,
+    };
   },
   watch: {
     value(newVal) {
       this.inputValue = newVal;
     },
-  }
+    inputValue(newVal) {
+      this.$emit("input", newVal);
+    },
+  },
 });
 </script>
 
 <template>
-  <b-form-group :label="label" class="my-4" :state="errorMsg ? false : null">
+  <b-form-group :label="label" class="my-2" :state="errorMsg ? false : null">
     <b-form-input
       v-model="inputValue"
       :state="errorMsg ? false : null"
-      :name="label"
-      :label="label"
+      :name="name"
       :placeholder="placeholder"
       :type="type || 'text'"
-      required="required"
+      required
     />
     <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p>
   </b-form-group>

@@ -1,5 +1,6 @@
 import { Claim } from "@/types";
 import { getUserDataById } from "./getUserDataById";
+
 export async function createClaim(
   userId: string,
   creationIpAddress: string,
