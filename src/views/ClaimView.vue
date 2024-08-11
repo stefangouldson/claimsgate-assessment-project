@@ -1,15 +1,15 @@
 <script lang="ts">
 import Vue from "vue";
-import TextComponent from "./text.vue";
+import TextComponent from "@/components/text.vue";
 
 export default Vue.extend({
-  name: "ClaimComponent",
+  name: "ClaimView",
   components: {
     TextComponent,
   },
-  props: {
-    claim: {
-      type: Object,
+  computed: {
+    claim() {
+      return this.$store.getters["claimData"];
     },
   },
 });
@@ -19,11 +19,12 @@ export default Vue.extend({
   <section>
     <TextComponent
       type="h1"
-      :text="`Claim created for ${claim.userData.firstName} ${claim.userData.lastName}`"
+      :text="`Claim created for ${claim.userData.firstName}  ${claim.userData.lastName}`"
       class="mb-3"
     />
     <p>Status: {{ claim.status }}</p>
     <p>IP Address: {{ claim.creationIpAddress }}</p>
-    <p>Raw Data: {{ claim.data }}</p>
+    <p>Created Date: {{ claim.createdDate }}</p>
+    <p>{{ claim.data }}</p>
   </section>
 </template>

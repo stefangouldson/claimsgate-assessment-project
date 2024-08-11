@@ -28,10 +28,6 @@ export default Vue.extend({
       type: String,
       required: true,
     },
-    errorMsg: {
-      type: String,
-      default: "",
-    },
     value: {
       type: String,
       default: "",
@@ -44,6 +40,8 @@ export default Vue.extend({
   data() {
     return {
       inputValue: this.value,
+      errorMessage: "",
+      showError: true
     };
   },
   watch: {
@@ -52,21 +50,35 @@ export default Vue.extend({
     },
     inputValue(newVal) {
       this.$emit("input", newVal);
+      this.validateInput(newVal);
+    },
+  },
+  methods: {
+    validateInput(value: string){
+      if(!value || value.length == 0){
+        this.errorMessage = `${this.label} field is required`;
+      } else {
+        this.errorMessage = "";
+      };
     },
   },
 });
 </script>
 
 <template>
-  <b-form-group :label="label" class="my-2" :state="errorMsg ? false : null">
+  <b-form-group
+    :label="label"
+    class="my-2"
+    :state="errorMessage ? false : null"
+  >
     <b-form-input
       v-model="inputValue"
-      :state="errorMsg ? false : null"
+      :state="errorMessage ? false : null"
       :name="name"
       :placeholder="placeholder"
       :type="type || 'text'"
       required
     />
-    <p v-if="errorMsg" class="text-danger">{{ errorMsg }}</p>
+    <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
   </b-form-group>
 </template>

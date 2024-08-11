@@ -13,7 +13,6 @@ const routes: Array<RouteConfig> = [
     name: "address",
     component: FormView,
     beforeEnter: async (to, from, next) => {
-      // TODO load the user data from getUserDataById and store it with VueX
       const userId = to.params.userId;
       // If userId is not a number, return error page
       if (isNaN(Number(userId))) {

@@ -27,6 +27,7 @@ export default Vue.extend({
   data() {
     return {
       form: { ...emptyAddress },
+      showError: true,
       fields: [
         {
           name: "line1",
@@ -61,16 +62,13 @@ export default Vue.extend({
       this.$store.commit("add_address", { ...this.form });
       this.form = { ...emptyAddress };
     },
-    handleSubmit() {
-      console.log("submitted");
-    },
   },
 });
 </script>
 
 <template>
   <div>
-    <FormComponent @submitted="handleSubmit" v-if="!claim">
+    <FormComponent v-if="!claim">
       <template #title>
         <TextComponent type="h1" :text="`Welcome Back ${userName}`" />
       </template>
