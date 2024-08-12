@@ -7,6 +7,7 @@ import {
   BListGroup,
   BListGroupItem,
 } from "bootstrap-vue";
+import { getPostcodes } from "@/core/getPostcodes";
 
 export default Vue.extend({
   name: "InputComponent",
@@ -36,12 +37,17 @@ export default Vue.extend({
       type: String,
       default: "",
     },
+    postcode: {
+      type: Boolean,
+      default: false,
+    }
   },
   data() {
     return {
       inputValue: this.value,
       errorMessage: "",
-      showError: true
+      showError: true,
+      suggestions: [] as string[],
     };
   },
   watch: {
@@ -55,11 +61,27 @@ export default Vue.extend({
   },
   methods: {
     validateInput(value: string){
+      this.errorMessage = "";
       if(!value || value.length == 0){
         this.errorMessage = `${this.label} field is required`;
-      } else {
-        this.errorMessage = "";
-      };
+      } else if (this.postcode && value.length < 4) {
+        this.errorMessage = "Postcode must be at least 4 characters"
+      }
+    },
+    async getPostcodeSuggestions() {
+      if (this.inputValue.length >= 4) {
+        try {
+          const postcodes = await getPostcodes(this.inputValue);
+          this.suggestions = postcodes;
+        } catch (error) {
+          throw new Error("failed to fetch suggestions")
+        }
+      }
+    },
+    choosePostcode(postcode: string) {
+      this.inputValue = postcode;
+      this.suggestions = [];
+      this.$emit("input", postcode);
     },
   },
 });
@@ -78,7 +100,18 @@ export default Vue.extend({
       :placeholder="placeholder"
       :type="type || 'text'"
       required
+      @input="getPostcodeSuggestions"
     />
+    <b-list-group v-if="postcode == true && suggestions.length > 0">
+      <b-list-group-item
+        v-for="(suggestion, index) in suggestions"
+        :key="index"
+        @click="choosePostcode(suggestion)"
+        style="cursor: pointer"
+      >
+        {{ suggestion }}
+      </b-list-group-item>
+    </b-list-group>
     <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
   </b-form-group>
 </template>

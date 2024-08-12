@@ -45,6 +45,7 @@ export default Vue.extend({
           type: "text",
           label: "Postcode",
           placeholder: "Enter the postcode of this address",
+          postcode: true,
         },
       ],
     };
@@ -91,6 +92,7 @@ export default Vue.extend({
             :type="field.type"
             :label="field.label"
             :placeholder="field?.placeholder"
+            :postcode="field?.postcode || false"
           />
           <b-button type="submit" variant="success" class="my-2">
             Save Address
