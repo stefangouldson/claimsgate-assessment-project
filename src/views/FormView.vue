@@ -30,18 +30,18 @@ export default Vue.extend({
       showError: true,
       fields: [
         {
-          name: "line1",
+          name: "line1" as keyof Address,
           type: "text",
           label: "Address Line 1",
           placeholder: "Enter your address",
         },
         {
-          name: "dateMoved",
+          name: "dateMoved" as keyof Address,
           type: "date",
           label: "Date Moved In",
         },
         {
-          name: "postcode",
+          name: "postcode" as keyof Address,
           type: "text",
           label: "Postcode",
           placeholder: "Enter the postcode of this address",
